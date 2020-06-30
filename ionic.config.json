@@ -1,0 +1,7 @@
+{
+  "name": "foodie",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
