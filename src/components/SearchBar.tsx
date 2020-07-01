@@ -18,11 +18,11 @@ const SearchBarExamples: React.FC = () => {
         </IonHeader>
         <IonSearchbar value={searchText} onIonChange={e => setSearchText(e.detail.value!)}></IonSearchbar>
       </IonContent>
-      <IonFooter>
+      {/* <IonFooter>
         <IonToolbar>
           Search Text: {searchText ?? '(none)'}
         </IonToolbar>
-      </IonFooter>
+      </IonFooter> */}
     </IonPage>
   );
 };

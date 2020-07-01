@@ -12,7 +12,7 @@ import {
 import { IonReactRouter } from '@ionic/react-router';
 import { search, add, triangle } from 'ionicons/icons';
 import RestaurantList from './pages/Restaurants';
-import Tab3 from './pages/Tab3';
+import Add from './pages/Add';
 import SearchBar from './components/SearchBar';
 
 /* Core CSS required for Ionic components to work properly */
@@ -36,25 +36,26 @@ import './theme/variables.css';
 
 const App: React.FC = () => (
   
+  
   <IonApp>
     <IonReactRouter>
       <IonTabs>
         <IonRouterOutlet>
-          <Route path="/tab2" component={RestaurantList} exact={true} />
-          <Route path="/tab3" component={Tab3} />
+          <Route path="/list" component={RestaurantList} exact={true} />
+          <Route path="/add" component={Add} />
           <Route path="/search" component={SearchBar} />
-          <Route path="/" render={() => <Redirect to="/tab1" />} exact={true} />
+          <Route path="/" render={() => <Redirect to="/list" />} exact={true} />
         </IonRouterOutlet>
         <IonTabBar slot="bottom">
           <IonTabButton tab="tab1" href="/search">
             <IonIcon icon={search} />
             <IonLabel>Search</IonLabel>
           </IonTabButton>
-          <IonTabButton tab="tab2" href="/tab2">
+          <IonTabButton tab="tab2" href="/list">
             <IonIcon icon={triangle} />
             <IonLabel>Food</IonLabel>
           </IonTabButton>
-          <IonTabButton tab="tab3" href="/tab3">
+          <IonTabButton tab="tab3" href="/add">
             <IonIcon icon={add} />
             <IonLabel>Add</IonLabel>
           </IonTabButton>
