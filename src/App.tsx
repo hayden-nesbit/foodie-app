@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {
   IonRouterOutlet, IonButtons, IonBackButton, IonTabBar, IonTabs, IonTabButton, IonBadge, IonApp, IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonCard, IonCardHeader, IonList, IonInput, IonCardSubtitle, IonCardTitle, IonCardContent, IonItem, IonIcon, IonLabel, IonButton, IonGrid, IonCol, IonRow, IonSearchbar, IonFooter
 } from '@ionic/react';
-import { search, add, triangle, call, navigate, menu, home, backspace, personCircle, ellipsisHorizontal, ellipsisVertical, settings, map, informationCircle, calendar } from 'ionicons/icons';
+import { search, add, triangle, trash, call, navigate, menu, home, backspace, personCircle, ellipsisHorizontal, ellipsisVertical, settings, map, informationCircle, calendar } from 'ionicons/icons';
 import axios from 'axios'
 
 /* Core CSS required for Ionic components to work properly */
@@ -27,6 +27,7 @@ import './theme/variables.css';
 const App: React.FC = () => {
 
   const [list, setList] = useState<any[]>([])
+  const [newList, setNewList] = useState<any[]>([])
   const [view, setView] = useState<string>("list")
   const [page, setPage] = useState<any>({})
   const [searchText, setSearchText] = useState('');
@@ -60,32 +61,44 @@ const App: React.FC = () => {
 
   function viewRestaurant(ind: any) {
     setView("page")
-    let viewPage = list[ind].restaurant
+    let viewPage = option[ind].restaurant
     setPage(viewPage)
   }
 
   function handleSubmit() {
-    let newObj = { 
+    let newObj = {
       "restaurant": {
         "name": name,
+        // "id": 
         "location": {
           "address": address
         },
         "cuisines": cuisine
       }
     }
-    
-    let newList = [newObj, ...list]
+
+    let listAdd = newList.length > 0 ? [newObj, ...newList] : [newObj, ...list]
 
     console.log(newList)
-    setList(newList)
-  
-    setView("list")
+    setNewList(listAdd)
 
+    setView("list")
   }
 
+  function deleteRestaurant() {
+    console.log(page.name)
 
-  let showList = list.map((item, index) => {
+    let option = newList.length > 0 ? newList : list
+
+    let deleteList = option.filter(item => item.restaurant.name !== page.name)
+
+    setNewList(deleteList)
+    setView("list")
+  }
+
+  let option = newList.length > 0 ? newList : list
+
+  let showList = option.map((item, index) => {
     return (
       <IonCard key={index}>
         <IonCardHeader>
@@ -122,7 +135,14 @@ const App: React.FC = () => {
               <IonCard>
                 <IonToolbar>
                   <IonButtons slot="start">
-                    <IonBackButton defaultHref="/" />
+                    <IonButton onClick={() => setView("list")}>
+                      <IonIcon icon={backspace} />
+                    </IonButton>
+                  </IonButtons>
+                  <IonButtons slot="end">
+                    <IonButton onClick={() => deleteRestaurant()}>
+                      <IonIcon color="danger" icon={trash} />
+                    </IonButton>
                   </IonButtons>
                   {/* <IonTitle>Back Button</IonTitle> */}
                 </IonToolbar>
