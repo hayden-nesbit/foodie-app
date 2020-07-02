@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import {
-  IonRouterOutlet, IonButtons, IonBackButton, IonTabBar, IonTabs, IonTabButton, IonBadge, IonApp, IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonCard, IonCardHeader, IonList, IonInput, IonCardSubtitle, IonCardTitle, IonCardContent, IonItem, IonIcon, IonLabel, IonButton, IonGrid, IonCol, IonRow, IonSearchbar, IonFooter
+  IonRouterOutlet, IonButtons, IonText, IonBackButton, IonTabBar, IonTabs, IonTabButton, IonBadge, IonApp, IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonCard, IonCardHeader, IonList, IonInput, IonCardSubtitle, IonCardTitle, IonCardContent, IonItem, IonIcon, IonLabel, IonButton, IonGrid, IonCol, IonRow, IonSearchbar, IonFooter
 } from '@ionic/react';
-import { search, add, triangle, trash, call, navigate, menu, home, backspace, personCircle, ellipsisHorizontal, ellipsisVertical, settings, map, informationCircle, calendar } from 'ionicons/icons';
+import { search, add, triangle, searchOutline, trash, call, listOutline, navigate, menu, home, backspace, personCircle, ellipsisHorizontal, ellipsisVertical, settings, map, informationCircle, calendar } from 'ionicons/icons';
 import axios from 'axios'
 
 /* Core CSS required for Ionic components to work properly */
@@ -20,6 +20,7 @@ import '@ionic/react/css/text-alignment.css';
 import '@ionic/react/css/text-transformation.css';
 import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/display.css';
+import './App.css'
 
 /* Theme variables */
 import './theme/variables.css';
@@ -28,7 +29,7 @@ const App: React.FC = () => {
 
   const [list, setList] = useState<any[]>([])
   const [newList, setNewList] = useState<any[]>([])
-  const [view, setView] = useState<string>("list")
+  const [view, setView] = useState<string>("home")
   const [page, setPage] = useState<any>({})
   const [searchText, setSearchText] = useState('');
   const [name, setName] = useState<string>();
@@ -116,17 +117,17 @@ const App: React.FC = () => {
   })
 
   return (
-    <IonApp>
+    <IonApp >
       <IonPage>
         <IonHeader>
-          <IonToolbar>
+          {/* <IonToolbar>
             <IonTitle>Find your food</IonTitle>
-          </IonToolbar>
+          </IonToolbar> */}
         </IonHeader>
-        <IonContent fullscreen>
+        <IonContent fullscreen id="home">
           <IonHeader collapse="condense">
-            <IonToolbar>
-              <IonTitle size="large">{view === "search" ? "Search" : view === "add" ? "Add a spot" : "Restaurants"} </IonTitle>
+            <IonToolbar color="dark">
+              <IonTitle color="light" size="large">{view === "home" ? "Foodie" : view === "add" ? "Add a spot" : "Restaurants"} </IonTitle>
             </IonToolbar>
           </IonHeader>
           {view === "list" ?
@@ -165,36 +166,48 @@ const App: React.FC = () => {
                     </IonRow>
                   </IonGrid>
                   <IonIcon icon={navigate} />
-                  <IonLabel>{page.location.address}</IonLabel> <br />
+                  <IonLabel> {page.location.address}</IonLabel> <br />
                   <IonIcon icon={call} />
-                  <IonLabel>{page.phone_numbers}</IonLabel> <br />
-                  {/* <IonIcon onClick={() => setView("list")} icon={backspace} size="large" /> */}
+                  <IonLabel> {page.phone_numbers}</IonLabel> <br />
                 </IonCardContent>
               </IonCard>
-              : view === "search" ?
-                <IonPage>
+              : view === "home" ?
+                <IonPage >
                   <IonHeader>
-                    <IonToolbar>
-                      <IonTitle>Search</IonTitle>
-                    </IonToolbar>
+                    {/* <IonToolbar>
+                      <IonTitle>Find great food</IonTitle>
+                    </IonToolbar> */}
                   </IonHeader>
-                  <IonContent>
+                  <IonContent fullscreen id="home">
                     <IonHeader collapse="condense">
                       <IonToolbar>
-                        <IonTitle size="large">Search</IonTitle>
+                        <IonTitle size="large">Foodie</IonTitle>
                       </IonToolbar>
                     </IonHeader>
-                    <IonSearchbar value={searchText} onIonChange={e => setSearchText(e.detail.value!)}></IonSearchbar>
+                    <IonFooter>
+                      <IonGrid id="bottom">
+                        <IonRow>
+                          <IonCol>
+                            <IonText color="light">
+                              <h1>Find</h1>
+                              <h1>Enjoy</h1>
+                              <h1>Share</h1>
+                            </IonText>
+                          </IonCol>
+                        </IonRow>
+                      </IonGrid>
+                    </IonFooter>
+
                   </IonContent>
                 </IonPage>
                 : view === "add" ?
                   <IonPage>
                     <IonHeader>
-                      <IonToolbar>
+                      {/* <IonToolbar>
                         <IonTitle>Add a spot</IonTitle>
-                      </IonToolbar>
+                      </IonToolbar> */}
                     </IonHeader>
-                    <IonContent>
+                    <IonContent fullscreen id="home">
                       <IonHeader collapse="condense">
                         <IonToolbar>
                           <IonTitle size="large">Add a spot</IonTitle>
@@ -226,8 +239,8 @@ const App: React.FC = () => {
         <IonFooter>
           <IonToolbar color="dark">
             <IonButtons slot="start">
-              <IonButton onClick={() => setView("search")}>
-                <IonIcon icon={search} />
+              <IonButton onClick={() => setView("home")}>
+                <IonIcon icon={home} />
               </IonButton>
             </IonButtons>
             <IonButtons slot="end">
@@ -235,13 +248,8 @@ const App: React.FC = () => {
                 <IonIcon icon={add} />
               </IonButton>
             </IonButtons>
-            <IonButtons slot="icon-only">
-              <IonButton>
-                <IonIcon color="light" icon={add} />
-              </IonButton>
-            </IonButtons>
 
-            <IonTitle onClick={() => setView("list")}><IonIcon icon={home} /></IonTitle>
+            <IonTitle onClick={() => setView("list")}><IonIcon size="large" icon={listOutline} /></IonTitle>
           </IonToolbar>
         </IonFooter>
       </IonPage>

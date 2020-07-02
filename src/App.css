@@ -1,0 +1,11 @@
+#home {
+    --background: url("./components/img.jpg") no-repeat center center / cover;
+}
+
+#bottom {
+    vertical-align: bottom;
+}
+
+#title {
+    background: transparent;
+}
