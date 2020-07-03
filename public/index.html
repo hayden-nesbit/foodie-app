@@ -24,6 +24,30 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   </head>
 
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-analytics.js"></script>
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyBed2ltE-OMS9Gnv1K62dA4l1pIPHnE7cU",
+    authDomain: "foodie-33619.firebaseapp.com",
+    databaseURL: "https://foodie-33619.firebaseio.com",
+    projectId: "foodie-33619",
+    storageBucket: "foodie-33619.appspot.com",
+    messagingSenderId: "33606661719",
+    appId: "1:33606661719:web:5c1a144c14c878a2a81512",
+    measurementId: "G-8S9W2TJJBW"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+</script>
+
   <body>
     <div id="root"></div>
   </body>

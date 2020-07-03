@@ -1,11 +1,12 @@
 #home {
-    --background: url("./components/img.jpg") no-repeat center center / cover;
+    --background: url("./components/cover1.jpg") no-repeat center center / cover;
 }
+
 
 #bottom {
     vertical-align: bottom;
 }
 
-#title {
-    background: transparent;
+h1 {
+    font-size: 100px;
 }

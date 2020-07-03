@@ -1,8 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import {
-  IonRouterOutlet, IonButtons, IonText, IonBackButton, IonTabBar, IonTabs, IonTabButton, IonBadge, IonApp, IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonCard, IonCardHeader, IonList, IonInput, IonCardSubtitle, IonCardTitle, IonCardContent, IonItem, IonIcon, IonLabel, IonButton, IonGrid, IonCol, IonRow, IonSearchbar, IonFooter
+  IonButtons, 
+  IonText, 
+  IonApp, 
+  IonContent, 
+  IonHeader, 
+  IonPage, 
+  IonTitle, 
+  IonToolbar, 
+  IonCard, 
+  IonCardHeader, 
+  IonList, 
+  IonInput, 
+  IonCardSubtitle, 
+  IonCardTitle, 
+  IonCardContent, 
+  IonItem, 
+  IonIcon, 
+  IonLabel, 
+  IonButton, 
+  IonGrid, 
+  IonCol, 
+  IonRow,
+  IonFooter
 } from '@ionic/react';
-import { search, add, triangle, searchOutline, trash, call, listOutline, navigate, menu, home, backspace, personCircle, ellipsisHorizontal, ellipsisVertical, settings, map, informationCircle, calendar } from 'ionicons/icons';
+import { add, trash, call, listOutline, navigate, home, backspace } from 'ionicons/icons';
 import axios from 'axios'
 
 /* Core CSS required for Ionic components to work properly */
@@ -31,7 +53,6 @@ const App: React.FC = () => {
   const [newList, setNewList] = useState<any[]>([])
   const [view, setView] = useState<string>("home")
   const [page, setPage] = useState<any>({})
-  const [searchText, setSearchText] = useState('');
   const [name, setName] = useState<string>();
   const [address, setAddress] = useState<string>();
   const [cuisine, setCuisine] = useState<string>();
@@ -70,29 +91,20 @@ const App: React.FC = () => {
     let newObj = {
       "restaurant": {
         "name": name,
-        // "id": 
         "location": {
           "address": address
         },
         "cuisines": cuisine
       }
     }
-
     let listAdd = newList.length > 0 ? [newObj, ...newList] : [newObj, ...list]
-
-    console.log(newList)
     setNewList(listAdd)
-
     setView("list")
   }
 
   function deleteRestaurant() {
-    console.log(page.name)
-
     let option = newList.length > 0 ? newList : list
-
     let deleteList = option.filter(item => item.restaurant.name !== page.name)
-
     setNewList(deleteList)
     setView("list")
   }
@@ -116,13 +128,11 @@ const App: React.FC = () => {
     )
   })
 
+
   return (
     <IonApp >
       <IonPage>
         <IonHeader>
-          {/* <IonToolbar>
-            <IonTitle>Find your food</IonTitle>
-          </IonToolbar> */}
         </IonHeader>
         <IonContent fullscreen id="home">
           <IonHeader collapse="condense">
@@ -145,7 +155,6 @@ const App: React.FC = () => {
                       <IonIcon color="danger" icon={trash} />
                     </IonButton>
                   </IonButtons>
-                  {/* <IonTitle>Back Button</IonTitle> */}
                 </IonToolbar>
                 <IonCardHeader>
                   <IonCardSubtitle>{page.cuisines}</IonCardSubtitle>
@@ -155,16 +164,16 @@ const App: React.FC = () => {
                   <IonGrid>
                     <IonRow>
                       <IonCol>
-                        <IonIcon size="large" icon={menu} /> <br />
-                        <IonLabel>Menu</IonLabel>
+                        <IonText><b>Hours:</b> <br />{page.timings}</IonText>
                       </IonCol>
-                      <IonCol>ion-col</IonCol>
                     </IonRow>
                     <IonRow>
-                      <IonCol>ion-col</IonCol>
-                      <IonCol>ion-col</IonCol>
+                      <IonCol>
+                        <a href={page.menu_url} target="_blank">Menu</a>
+                      </IonCol>
                     </IonRow>
                   </IonGrid>
+
                   <IonIcon icon={navigate} />
                   <IonLabel> {page.location.address}</IonLabel> <br />
                   <IonIcon icon={call} />
@@ -174,9 +183,6 @@ const App: React.FC = () => {
               : view === "home" ?
                 <IonPage >
                   <IonHeader>
-                    {/* <IonToolbar>
-                      <IonTitle>Find great food</IonTitle>
-                    </IonToolbar> */}
                   </IonHeader>
                   <IonContent fullscreen id="home">
                     <IonHeader collapse="condense">
@@ -197,15 +203,11 @@ const App: React.FC = () => {
                         </IonRow>
                       </IonGrid>
                     </IonFooter>
-
                   </IonContent>
                 </IonPage>
                 : view === "add" ?
                   <IonPage>
                     <IonHeader>
-                      {/* <IonToolbar>
-                        <IonTitle>Add a spot</IonTitle>
-                      </IonToolbar> */}
                     </IonHeader>
                     <IonContent fullscreen id="home">
                       <IonHeader collapse="condense">
@@ -226,7 +228,6 @@ const App: React.FC = () => {
                           <IonLabel position="floating">Cuisine</IonLabel>
                           <IonInput value={cuisine} onIonChange={e => setCuisine(e.detail.value!)}></IonInput>
                         </IonItem>
-
                       </IonList> <br />
                       <IonButton onClick={handleSubmit} expand="block">Add restaurant</IonButton>
 
